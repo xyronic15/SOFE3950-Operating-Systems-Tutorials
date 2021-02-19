@@ -13,6 +13,15 @@
 // Returns true if the player name matches one of the existing players
 bool player_exists(player *players, int num_players, char *name)
 {
+    // iterate through each player
+    for(int i = 0; i < num_players; i++){
+        // compare the given name to the name of the player
+        if (strcmp(players[i].name, name) == 0)
+        {
+            return true;
+        }
+        
+    }
     return false;
 }
 
