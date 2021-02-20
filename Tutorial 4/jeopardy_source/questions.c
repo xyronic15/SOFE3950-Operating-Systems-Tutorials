@@ -115,3 +115,17 @@ bool already_answered(char *category, int value)
     // Return true if question doesn't exist
     return true;
 }
+
+// Returns true if all the questions are answered
+bool all_answered(void){
+    // iterate through each question and check if answered
+    for(int i = 0; i < 12; i++){
+        if (!questions[i].answered)
+        {
+            // return false if even one question is unanswered
+            return false;
+        }
+    }
+
+    return true;
+}
