@@ -31,7 +31,21 @@ void display_question(char *category, int value)
 // Returns true if the answer is correct for the question for that category and dollar value
 bool valid_answer(char *category, int value, char *answer)
 {
-    // Look into string comparison functions
+    // lookup the question and check the answer
+    for(int i = 0; i < 12; i++){
+        if(strcmp(questions[i].category, category) && questions[i].value == value){
+            // Compare the answer
+            if(strcasecmp(questions[i].answer, answer)){
+                // Return true if correct
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+    }
+
+    // Return false if question not found at all
     return false;
 }
 
