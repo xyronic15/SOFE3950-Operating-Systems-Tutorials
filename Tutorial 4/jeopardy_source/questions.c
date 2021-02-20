@@ -25,7 +25,18 @@ void display_categories(void)
 // Displays the question for the category and dollar value
 void display_question(char *category, int value)
 {
+    // lookup the question and print if found
+    for(int i = 0; i < 12; i++){
+        if(strcmp(questions[i].category, category) && questions[i].value == value){
+            printf("%s", questions[i].question);
+            return;
+        }
+    }
 
+    // Print not found
+    printf("Question not found");
+    return;
+    
 }
 
 // Returns true if the answer is correct for the question for that category and dollar value
