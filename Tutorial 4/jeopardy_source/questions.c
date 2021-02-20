@@ -82,6 +82,8 @@ bool valid_answer(char *category, int value, char *answer)
                 return true;
             } else
             {
+                // change question to answered
+                questions[i].answered = true;
                 return false;
             }
         }
