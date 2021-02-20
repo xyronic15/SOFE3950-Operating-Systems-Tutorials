@@ -20,6 +20,35 @@ void initialize_game(void)
 void display_categories(void)
 {
     // print categories and dollar values for each unanswered question in questions array
+
+    // Assign a column width
+    int col_width = 15;
+
+    // Print all of the categories on the first line
+    for(int i = 0; i < NUM_CATEGORIES; i++){
+        printf("%-*s", col_width, categories[i]);
+    }
+    printf("\n");
+
+    // Print values for each question or "---" for unanswered questions
+    // Print three values then go to the next line
+    for (int i = 0; i < 12; i++)
+    {
+        if (!questions[i].answered)
+        {
+            printf("%-*d", col_width, questions[i].value);
+        } else
+        {
+            printf("%-*s", col_width, " --- ");
+        }
+
+        if (i % 3 == 0)
+        {
+            printf("\n");
+        }
+    }
+    
+
 }
 
 // Displays the question for the category and dollar value
@@ -47,7 +76,9 @@ bool valid_answer(char *category, int value, char *answer)
         if(strcmp(questions[i].category, category) && questions[i].value == value){
             // Compare the answer
             if(strcasecmp(questions[i].answer, answer)){
-                // Return true if correct
+                // change question to answered
+                questions[i].answered = true;
+                // return true if correct answer
                 return true;
             } else
             {
