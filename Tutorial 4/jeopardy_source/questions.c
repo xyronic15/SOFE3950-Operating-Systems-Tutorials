@@ -39,5 +39,23 @@ bool valid_answer(char *category, int value, char *answer)
 bool already_answered(char *category, int value)
 {
     // lookup the question and see if it's already been marked as answered
-    return false;
+    for(int i = 0; i < 12; i++){
+        if(strcmp(questions[i].category, category) && questions[i].value == value){
+            if (questions[i].answered)
+            {
+                // Print already answered message if answered
+                printf("This question is already answered!");
+                return questions[i].answered;
+            } else
+            {
+                // Just return if not answered yet
+                return questions[i].answered;
+            }
+        }
+    }
+
+    // Print a message that says the question doesn't exist
+    printf("Question does not exist");
+    // Return true if question doesn't exist
+    return true;
 }
