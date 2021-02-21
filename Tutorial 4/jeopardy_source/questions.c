@@ -14,6 +14,32 @@
 void initialize_game(void)
 {
     // initialize each question struct and assign it to the questions array
+
+    // initialize the categories first
+    // set answered to false
+    // Assign a value for each question
+    for (int i = 0; i < 12; i++)
+    {
+        strcpy(questions[i].category, categories[1 % 3]);
+        questions[i].answered = false;
+
+        if (i > 8){
+            // Set 800 value
+            questions[i].value = 800;
+        } else if (i > 5){
+            // Set 600  value
+            questions[i].value = 600;
+        } else if (i > 2){
+            // Set 400 value
+            questions[i].value = 400;
+        } else{
+            // Set 200 value
+            questions[i].value = 200;
+        }        
+    }
+
+    
+    
 }
 
 // Displays each of the remaining categories and question dollar values that have not been answered
