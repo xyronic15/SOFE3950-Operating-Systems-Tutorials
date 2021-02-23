@@ -53,6 +53,10 @@ int main(int argc, char *argv[])
     // Perform an infinite loop getting command input from users until game ends
     while (!all_answered())
     {
+
+        // clear the command line
+        system("clear");
+
         // Call functions from the questions and players source files
 
         // Execute the game until all questions are answered
