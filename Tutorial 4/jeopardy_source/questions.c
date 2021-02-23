@@ -20,7 +20,7 @@ void initialize_game(void)
     // Assign a value for each question
     for (int i = 0; i < 12; i++)
     {
-        strcpy(questions[i].category, categories[1 % 3]);
+        strcpy(questions[i].category, categories[i % 3]);
         questions[i].answered = false;
 
         if (i > 8){
@@ -38,6 +38,27 @@ void initialize_game(void)
         }        
     }
 
+    // Programming questions
+
+
+    // Algorithm questions
+    questions[1].value = 200;
+    strcpy(questions[0].question, "The data structure used to perform breadth first search");
+    strcpy(questions[0].answer, "queue");
+
+    questions[4].value = 400;
+    strcpy(questions[0].question, "This search algorithm runs in O(logn) time");
+    strcpy(questions[0].answer, "binary search");
+
+    questions[7].value = 600;
+    strcpy(questions[0].question, "This data structure is made up of nodes with at most 2 children nodes per node");
+    strcpy(questions[0].answer, "binary tree");
+
+    questions[10].value = 800;
+    strcpy(questions[0].question, "This complexity measures the amount of time an algorithm may take");
+    strcpy(questions[0].answer, "time complexity");
+
+    // Databases Questions
     
     
 }
