@@ -104,12 +104,18 @@ void display_categories(void)
     for(int i = 0; i < NUM_CATEGORIES; i++){
         printf("%-*s", col_width, categories[i]);
     }
-    printf("\n");
+    // printf("\n");
 
     // Print values for each question or "---" for unanswered questions
     // Print three values then go to the next line
     for (int i = 0; i < 12; i++)
     {
+
+        if (i % 3 == 0)
+        {
+            printf("\n");
+        }
+        
         if (!questions[i].answered)
         {
             printf("%-*d", col_width, questions[i].value);
@@ -118,13 +124,10 @@ void display_categories(void)
             printf("%-*s", col_width, " --- ");
         }
 
-        if (i % 3 == 0)
-        {
-            printf("\n");
-        }
+        
     }
     
-
+    printf("\n");
 }
 
 // Displays the question for the category and dollar value
