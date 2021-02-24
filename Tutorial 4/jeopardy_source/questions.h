@@ -54,4 +54,7 @@ extern bool already_answered(char *category, int value);
 // Returns true if all the questions are answered
 extern bool all_answered(void);
 
+// prints the answer of a question
+extern void print_answer(char *category, int value);
+
 #endif /* QUESTIONS_H_ */

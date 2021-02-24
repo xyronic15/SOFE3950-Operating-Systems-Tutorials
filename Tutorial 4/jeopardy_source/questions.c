@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include "questions.h"
 
 // Initializes the array of questions for the game
@@ -39,12 +40,26 @@ void initialize_game(void)
     }
 
     // Programming questions
+    questions[0].value = 200;
+    strcpy(questions[0].question, " A piece of code containing a group of statements that is written once but can be executed multiple times");
+    strcpy(questions[0].answer, "a loop");
 
+    questions[3].value = 400;
+    strcpy(questions[0].question, "Who invented C++?");
+    strcpy(questions[0].answer, "Bjarne Stroustrup");
+
+    questions[6].value = 600;
+    strcpy(questions[0].question, "A set of instructions that can be performed with or without a computer");
+    strcpy(questions[0].answer, "an algorithm");
+
+    questions[9].value = 800;
+    strcpy(questions[0].question, "Command on Linux that shows current directory");
+    strcpy(questions[0].answer, "pwd");
 
     // Algorithm questions
     questions[1].value = 200;
     strcpy(questions[0].question, "The data structure used to perform breadth first search");
-    strcpy(questions[0].answer, "queue");
+    strcpy(questions[0].answer, "a queue");
 
     questions[4].value = 400;
     strcpy(questions[0].question, "This search algorithm runs in O(logn) time");
@@ -52,14 +67,28 @@ void initialize_game(void)
 
     questions[7].value = 600;
     strcpy(questions[0].question, "This data structure is made up of nodes with at most 2 children nodes per node");
-    strcpy(questions[0].answer, "binary tree");
+    strcpy(questions[0].answer, "a binary tree");
 
     questions[10].value = 800;
     strcpy(questions[0].question, "This complexity measures the amount of time an algorithm may take");
     strcpy(questions[0].answer, "time complexity");
 
     // Databases Questions
-    
+    questions[2].value = 200;
+    strcpy(questions[0].question, "The present day “Database Management Systems” have evolved from a class of programs known as");
+    strcpy(questions[0].answer, "a file management system");
+
+    questions[5].value = 400;
+    strcpy(questions[0].question, "These take applications to links or references which point towards the final data storage destination");
+    strcpy(questions[0].answer, "a Navigational Database");
+
+    questions[8].value = 600;
+    strcpy(questions[0].question, "These store data in rows and columns allowing the applications to search for data instead of references. Edgar F. Codd, created the relational data base model and shared his invention in a paper entitled “A Relational Model for Large Shared Databanks”");
+    strcpy(questions[0].answer, "a relational database");
+
+    questions[11].value = 800;
+    strcpy(questions[0].question, "Currently a buzzword, it is comprised of all the NoSQL DBMS such as MongoDB, HBase, Cassandra, Redis and CouchDB");
+    strcpy(questions[0].answer, "a Post-relational Database");
     
 }
 
@@ -177,4 +206,15 @@ bool all_answered(void){
     }
 
     return true;
+}
+
+// prints the answer of a question
+void print_answer(char *category, int value){
+
+    // lookup the question and print the answer
+    for(int i = 0; i < 12; i++){
+        if(strcmp(questions[i].category, category) && questions[i].value == value){
+            printf("Correct answer was: %s", questions[i].answer);
+        }
+    }
 }

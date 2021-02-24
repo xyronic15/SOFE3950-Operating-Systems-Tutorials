@@ -21,22 +21,6 @@
 
 // Token: Processes the answer from the user containing what is or who is and tokenizes it to retrieve the answer.
 void tokenize(char *input, char **tokens);
-    const char delimiter = " ";
-    
-    char *stringTokens = strtok(input, delimiter);
-
-    if (stringTokens != NULL){
-        if (strcmp(stringTokens, "who") != 0 || strcmp(stringTokens, "what") != 0) {
-            return;
-        }
-        if (strcmp(stringTokens, "is") != 0) {
-            return;
-        }
-    }
-
-    *stringTokens = strtok(NULL, delimiter);
-
-
 
 // Displays the game results for each player, their name and final score, ranked from first to last place
 void show_results(player *players, int num_players);
@@ -77,26 +61,33 @@ int main(int argc, char *argv[])
         char chosenCategory[MAX_LEN] = "";
         int chosenValue = 0;
 
+        // Get the current player
         do {
-        if(strcmp(chosenPlayer, "") != 0)
-        printf("The player %s was not found", chosenPlayer);
+            if(strcmp(chosenPlayer, "") != 0){
+                printf("The player %s was not found", chosenPlayer);
+            }
 
-        printf("Enter first player's name: ");
-        scanf("%s", (char *) &chosenPlayer);
+            printf("Enter first player's name: ");
+            scanf("%s", (char *) &chosenPlayer);
         } while(!player_exists(players, 4, chosenPlayer));
 
+        system("clear");
+        display_categories();
+
+        // Get the chosen category
         do {
-        if(chosenValue != 0)
-        printf("Invalid selection");
+            if(chosenValue != 0){
+                printf("No category");
+            }
 
-        printf("Enter category: ");
-        getchar();
-        fgets((char *) chosenCategory, MAX_LEN, stdin);
-        strtok(chosenCategory, "\n");
+            printf("Enter category: ");
+            getchar();
+            fgets((char *) chosenCategory, MAX_LEN, stdin);
+            strtok(chosenCategory, "\n");
 
-        printf("Enter: ");
-        scanf("%d", (int *) &chosenValue);
-        } while(alreadyAnswered(chosenCategory, chosenValue));
+            printf("Enter: ");
+            scanf("%d", (int *) &chosenValue);
+        } while(already_answered(chosenCategory, chosenValue));
 
 
         system("clear");
@@ -109,27 +100,39 @@ int main(int argc, char *argv[])
         char *tokenize_answer;
         tokenize((char *) answer, &tokenize_answer);
 
-        if(tokenize_answer == NULL)
-        printf("Try again");
-        else if(valid_answer(chosenCategory, chosenValue, tokenize_answer)) {
-        printf("Correct Answer!");
-        printf("%s gains %d points \n", chosenPlayer, chosenValue);
-        update_score(players, 4, chosenPlayer, chosenValue);
+        if(tokenize_answer == NULL){
+            printf("Try again");
+        } else if(valid_answer(chosenCategory, chosenValue, tokenize_answer)) {
+            printf("Correct Answer!");
+            printf("%s gains %d points \n", chosenPlayer, chosenValue);
+            update_score(players, 4, chosenPlayer, chosenValue);
         } else {
-        printf("Wrong Answer!");
-        int num = get_question_number(chosenCategory, chosenValue);
-        printf("Correct answer was: %s", questions[num].answer);
-        }
-
-        track_answered(chosenCategory, chosenValue);
-
+            printf("Wrong Answer!");
+            print_answer(chosenCategory, chosenValue);
         }
 
         show_results(players, 4);
         getchar();
 
     }
-    return EXIT_SUCCESS;
+    return 0;
+}
+
+void tokenize(char *input, char **tokens) {
+    const char delimiter = " ";
+    
+    char *stringTokens = strtok(input, delimiter);
+
+    if (stringTokens != NULL){
+        if (strcmp(stringTokens, "who") != 0 || strcmp(stringTokens, "what") != 0) {
+            return;
+        }
+        if (strcmp(stringTokens, "is") != 0) {
+            return;
+        }
+    }
+
+    *stringTokens = strtok(NULL, delimiter);
 }
 
 
@@ -139,8 +142,8 @@ void show_results(player *players, int numPlayers) {
     int winner = 0;
 
     for(int i = 0; i < numPlayers; i++) {
-        if((int) strlen(players[i].playerName) > playerName)
-            playerName = strlen(players[i].playerName);
+        if((int) strlen(players[i].name) > playerName)
+            playerName = strlen(players[i].name);
 
         if(players[i].score > score) {
             score = players[i].score;
@@ -150,7 +153,7 @@ void show_results(player *players, int numPlayers) {
 
     printf("Scores: \n");
     for(int i = 0; i < numPlayers; i++)
-        printf("%*s: %d\n", playerName + 1, players[i].playerName, players[i].score);
+        printf("%*s: %d\n", playerName + 1, players[i].name, players[i].score);
 
-    printf("Winner: %s", players[winner].playerName);
+    printf("Winner: %s", players[winner].name);
 }
