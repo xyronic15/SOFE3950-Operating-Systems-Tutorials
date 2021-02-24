@@ -56,12 +56,62 @@ int main(int argc, char *argv[])
 
         // clear the command line
         system("clear");
+        
+        char chosenPlayer[MAX_LEN] = "";
+        char chosenCategory[MAX_LEN] = "";
+        int chosenValue = 0;
 
-        // Call functions from the questions and players source files
+        do {
+        if(strcmp(chosenPlayer, "") != 0)
+        printf("The player %s was not found", chosenPlayer);
 
-        // Execute the game until all questions are answered
+        printf("Enter first player's name: ");
+        scanf("%s", (char *) &chosenPlayer);
+        } while(!player_exists(players, 4, chosenPlayer));
 
-        // Display the final results and exit
+        do {
+        if(chosenValue != 0)
+        printf("Invalid selection");
+
+        printf("Enter category: ");
+        getchar();
+        fgets((char *) chosenCategory, MAX_LEN, stdin);
+        strtok(chosenCategory, "\n");
+
+        printf("Enter: ");
+        scanf("%d", (int *) &chosenValue);
+        } while(alreadyAnswered(chosenCategory, chosenValue));
+
+
+        system("clear");
+        display_question(chosenCategory, chosenValue);
+
+        char *answer[MAX_LEN] = {0};
+        getchar();
+        fgets((char *) answer, MAX_LEN, stdin);
+
+        char *tokenize_answer;
+        tokenize((char *) answer, &tokenize_answer);
+
+        if(tokenize_answer == NULL)
+        printf("Try again");
+        else if(valid_answer(chosenCategory, chosenValue, tokenize_answer)) {
+        printf("Correct Answer!");
+        printf("%s gains %d points \n", chosenPlayer, chosenValue);
+        update_score(players, 4, chosenPlayer, chosenValue);
+        } else {
+        printf("Wrong Answer!");
+        int num = get_question_number(chosenCategory, chosenValue);
+        printf("Correct answer was: %s", questions[num].answer);
+        }
+
+        track_answered(chosenCategory, chosenValue);
+
+        }
+
+        show_results(players, 4);
+        getchar();
+
     }
     return EXIT_SUCCESS;
 }
