@@ -21,7 +21,22 @@
 
 // Token: Processes the answer from the user containing what is or who is and tokenizes it to retrieve the answer.
 void tokenize(char *input, char **tokens);
+    const char delimiter = " ";
     
+    char *stringTokens = strtok(input, delimiter);
+
+    if (stringTokens != NULL){
+        if (strcmp(stringTokens, "who") != 0 || strcmp(stringTokens, "what") != 0) {
+            return;
+        }
+        if (strcmp(stringTokens, "is") != 0) {
+            return;
+        }
+    }
+
+    *stringTokens = strtok(NULL, delimiter);
+
+
 
 // Displays the game results for each player, their name and final score, ranked from first to last place
 void show_results(player *players, int num_players);
