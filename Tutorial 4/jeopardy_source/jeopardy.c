@@ -115,3 +115,26 @@ int main(int argc, char *argv[])
     }
     return EXIT_SUCCESS;
 }
+
+
+void show_results(player *players, int numPlayers) {
+    int playerName = 0;
+    int score = 0;
+    int winner = 0;
+
+    for(int i = 0; i < numPlayers; i++) {
+        if((int) strlen(players[i].playerName) > playerName)
+            playerName = strlen(players[i].playerName);
+
+        if(players[i].score > score) {
+            score = players[i].score;
+            winner = i;
+        }
+    }
+
+    printf("Scores: \n");
+    for(int i = 0; i < numPlayers; i++)
+        printf("%*s: %d\n", playerName + 1, players[i].playerName, players[i].score);
+
+    printf("Winner: %s", players[winner].playerName);
+}
