@@ -11,22 +11,24 @@ sem_t mutex;
 
 int total_sum;
 
-void factorial(int num){
-
-    // Calculate the factorial
-    int fact = 1;
-    for(int i = num; i > 0; i++){
-        fact *= i;
-    }
+void factorial(void *num){
 
     // wait
     sem_wait(&mutex);
+    
+    int n = *(int*)num;
+
+    // Calculate the factorial
+    int fact = 1;
+    for(int i = n; i > 0; i--){
+        fact *= i;
+    }
 
     // add fact to the total sum
     total_sum += fact;
 
     // Print the factorial
-    printf("Calculated factorial for %d: %d\n", num, fact);
+    printf("Calculated factorial for %d: %d\n", n, fact);
 
     // signal
     sem_post(&mutex);
@@ -51,18 +53,14 @@ int main(void){
     fclose(fp);
     
     int pid = fork();
-
-    printf("%d\n", pid);
     
     if(pid == 0){ // child process
-
-        printf("working");
         
         // open numbers.txt and read
         fp = fopen("numbers.txt", "r");
         int i = 0;
         int nums[5];
-        while (fscanf(fp, "%d\n", &num))
+        while (fscanf(fp, "%d\n", &num) != EOF)
         {
             // add the scanned number into nums
             nums[i] = num;
@@ -75,14 +73,20 @@ int main(void){
         // initialize semaphore
         sem_init(&mutex, 0, 1);
 
-        pthread_t tid;
+        pthread_t tid[5];
 
         // Make 5 threads
         for (int i = 0; i < 5; i++){
-            pthread_create(&tid, NULL,(void *) factorial, &nums[i]);
-            printf("working");
+            int* n = malloc(sizeof(int));
+            *n = nums[i];
+            // printf("%d\n", num);
+            pthread_create(&tid[i], NULL,(void *) factorial, n);
         }
-        pthread_join(tid, NULL);
+
+        for (int i = 0; i < 5; i++){
+            pthread_join(tid[i], NULL);
+        }
+        
         sem_destroy(&mutex);
 
         // open and write to sum.txt
